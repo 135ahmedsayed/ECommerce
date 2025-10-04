@@ -1,4 +1,6 @@
 
+using Ecommerce.Persistence.DependancyInjection;
+
 namespace ECommerce.Web
 {
     public class Program
@@ -9,6 +11,7 @@ namespace ECommerce.Web
 
             // Add services to the container.
 
+            builder.Services.AddPersistenceServices(builder.Configuration);
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();

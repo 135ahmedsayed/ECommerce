@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 namespace Ecommerce.Persistence.Context;
-internal class AplicationDbContext : DbContext
+internal class AplicationDbContext(DbContextOptions<AplicationDbContext> options) 
+    : DbContext(options)
 {
     public DbSet<Product> Products { get; set; }
     public DbSet<ProductType> ProductTypes { get; set; }
