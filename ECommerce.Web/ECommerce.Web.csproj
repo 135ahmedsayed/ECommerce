@@ -7,11 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.9">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <ProjectReference Include="..\Infrastructure\Ecommerce.Persistence\Ecommerce.Persistence.csproj" />
+    <ProjectReference Include="..\Infrastructure\Ecommerce.Presentation.api\Ecommerce.Presentation.api.csproj" />
   </ItemGroup>
 
 </Project>
