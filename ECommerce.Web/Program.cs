@@ -1,11 +1,12 @@
 
+using Ecommerce.Domain.Contracts;
 using Ecommerce.Persistence.DependancyInjection;
 
 namespace ECommerce.Web
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +20,11 @@ namespace ECommerce.Web
 
             var app = builder.Build();
 
+            // initialize database
+            var scope = app.Services.CreateScope();
+            var initializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
+            await initializer.InitializeAsync();
+            //___________________
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {

@@ -13,7 +13,7 @@ internal class ProductConfigration : IEntityTypeConfiguration<Product>
         builder.Property(b => b.Description)
                .HasMaxLength(500)
                .HasColumnType("VarChar");
-        builder.Property(b => b.Salary)
+        builder.Property(b => b.Price)
                .HasColumnType("decimal(10,2)");
 
         builder.HasOne(b => b.ProductBrand)

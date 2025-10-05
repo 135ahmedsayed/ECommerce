@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Ecommerce.Persistence.Context.Migrations
 {
     [DbContext(typeof(AplicationDbContext))]
-    [Migration("20251004220341_InitialCreated")]
-    partial class InitialCreated
+    [Migration("20251005193941_InitalCreated")]
+    partial class InitalCreated
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,7 +50,7 @@ namespace Ecommerce.Persistence.Context.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("VarChar");
 
-                    b.Property<decimal>("Salary")
+                    b.Property<decimal>("Price")
                         .HasColumnType("decimal(10,2)");
 
                     b.Property<int>("TypeId")

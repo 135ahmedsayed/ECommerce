@@ -47,7 +47,7 @@ namespace Ecommerce.Persistence.Context.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("VarChar");
 
-                    b.Property<decimal>("Salary")
+                    b.Property<decimal>("Price")
                         .HasColumnType("decimal(10,2)");
 
                     b.Property<int>("TypeId")

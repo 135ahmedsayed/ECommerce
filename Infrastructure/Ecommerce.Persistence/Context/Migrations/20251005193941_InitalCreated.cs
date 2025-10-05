@@ -5,7 +5,7 @@
 namespace Ecommerce.Persistence.Context.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreated : Migration
+    public partial class InitalCreated : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -45,7 +45,7 @@ namespace Ecommerce.Persistence.Context.Migrations
                     Name = table.Column<string>(type: "VarChar(256)", maxLength: 256, nullable: false),
                     Description = table.Column<string>(type: "VarChar(500)", maxLength: 500, nullable: false),
                     PictureUrl = table.Column<string>(type: "VarChar(256)", maxLength: 256, nullable: false),
-                    Salary = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
                     BrandId = table.Column<int>(type: "int", nullable: false),
                     TypeId = table.Column<int>(type: "int", nullable: false)
                 },
