@@ -28,23 +28,23 @@ internal class DbInitializer(AplicationDbContext dbContext)
                 }
                 await dbContext.SaveChangesAsync();
             }
-            //if (!dbContext.ProductTypes.Any())
-            //{
-            //    //Read from json
-            //    var typeDate = await File.ReadAllTextAsync(@"..\Infrastructure\Ecommerce.Persistence\Context\DataSeed\delivery.json");
-            //    //Deserialize Convert From json to C#
-            //    var options = new JsonSerializerOptions
-            //    {
-            //        PropertyNameCaseInsensitive = true
-            //    };
-            //    var Types = JsonSerializer.Deserialize<List<ProductType>>(typeDate ,options);
-            //    //Save to db 
-            //    if (Types is not null && Types.Any())
-            //    {
-            //        await dbContext.ProductTypes.AddRangeAsync(Types);
-            //    }
-            //    await dbContext.SaveChangesAsync();
-            //}
+            if (!dbContext.ProductTypes.Any())
+            {
+                //Read from json
+                var typeDate = await File.ReadAllTextAsync(@"..\Infrastructure\Ecommerce.Persistence\Context\DataSeed\types.json");
+                //Deserialize Convert From json to C#
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+                var Types = JsonSerializer.Deserialize<List<ProductType>>(typeDate, options);
+                //Save to db 
+                if (Types is not null && Types.Any())
+                {
+                    await dbContext.ProductTypes.AddRangeAsync(Types);
+                }
+                await dbContext.SaveChangesAsync();
+            }
             if (!dbContext.Products.Any())
             {
                 //Read from json
