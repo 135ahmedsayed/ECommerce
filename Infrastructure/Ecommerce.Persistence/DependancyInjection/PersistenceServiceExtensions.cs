@@ -15,6 +15,7 @@ public static class PersistenceServiceExtensions
             var connectionString = configuration.GetConnectionString("SQLConnection");
             options.UseSqlServer(connectionString);
         });
+        Services.AddScoped<IUnitOfWork,UnitOfWork>();
         Services.AddScoped<IDbInitializer, DbInitializer>();
         return Services;
     }
