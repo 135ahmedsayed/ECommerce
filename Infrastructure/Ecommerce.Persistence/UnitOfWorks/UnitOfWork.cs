@@ -1,4 +1,4 @@
-﻿namespace Ecommerce.Persistence.UnitOfWork;
+﻿namespace Ecommerce.Persistence.UnitOfWorks;
 public class UnitOfWork(ApplicationDbContext dbContext) : IUnitOfWork
 {
     private readonly Dictionary<string, object> _repositories = [];

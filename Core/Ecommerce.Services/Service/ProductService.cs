@@ -1,26 +1,37 @@
-﻿using Ecommerce.ServiceAbstraction;
+﻿using AutoMapper;
+using Ecommerce.Domain.Contracts;
+using Ecommerce.Domain.Entities.Products;
+using Ecommerce.ServiceAbstraction;
 using Ecommerce.Shared.DTOs.Products;
 
 namespace Ecommerce.Services.Service;
-public class ProductService : IProductService
+public class ProductService(IUnitOfWork unitOfWork , IMapper mapper) : IProductService
 {
-    public Task<IEnumerable<BrandResponse>> GetBrandsAsync(CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<BrandResponse>> GetBrandsAsync(CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        var brands = await unitOfWork.GetRepostory<ProductBrand, int>()
+            .GetAllAsync(cancellationToken);
+        return mapper.Map<IEnumerable<BrandResponse>>(brands);
     }
 
-    public Task<ProductResponse?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
+    public async Task<ProductResponse?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        var products = await unitOfWork.GetRepostory<Product, int>()
+            .GetByIDAsync(id,cancellationToken);
+        return mapper.Map<ProductResponse>(products);
     }
 
-    public Task<IEnumerable<ProductResponse>> GetProductsAsync(CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<ProductResponse>> GetProductsAsync(CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        var products = await unitOfWork.GetRepostory<Product, int>()
+            .GetAllAsync(cancellationToken);
+        return mapper.Map<IEnumerable<ProductResponse>>(products);
     }
 
-    public Task<IEnumerable<TypeResponse>> GetTypesAsync(CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<TypeResponse>> GetTypesAsync(CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        var Types = await unitOfWork.GetRepostory<ProductType, int>()
+            .GetAllAsync(cancellationToken);
+        return mapper.Map<IEnumerable<TypeResponse>>(Types);
     }
 }
