@@ -33,6 +33,8 @@ namespace ECommerce.Web
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+            //picture
+            app.UseStaticFiles();
 
             app.UseHttpsRedirection();
 
