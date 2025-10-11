@@ -1,5 +1,4 @@
-﻿
-using Ecommerce.Persistence.Context;
+﻿using Ecommerce.Persistence.Context;
 using Ecommerce.Persistence.DbInitializers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,11 +9,13 @@ public static class PersistenceServiceExtensions
     public static IServiceCollection AddPersistenceServices(this IServiceCollection Services,
         IConfiguration configuration)
     {
-        Services.AddDbContext<AplicationDbContext>(options =>
+        Services.AddDbContext<ApplicationDbContext>(options =>
         {
             var connectionString = configuration.GetConnectionString("SQLConnection");
             options.UseSqlServer(connectionString);
         });
+        // Configure Repositories and UnitOfWork Pattern
+        Services.AddScoped<IUnitOfWork,UnitOfWork>();
         Services.AddScoped<IDbInitializer, DbInitializer>();
         return Services;
     }
