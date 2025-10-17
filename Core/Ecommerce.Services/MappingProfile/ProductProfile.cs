@@ -11,11 +11,9 @@ public class ProductProfile :Profile
         // Mapping configurations
         CreateMap<Product, ProductResponse>()
             .ForMember(d => d.Brand,
-            o => o.MapFrom(s => s.ProductBrand.Name));
-        CreateMap<Product, ProductResponse>()
+            o => o.MapFrom(s => s.ProductBrand.Name))
             .ForMember(d => d.Type,
-            o => o.MapFrom(s => s.ProductType.Name));
-        CreateMap<Product, ProductResponse>()
+            o => o.MapFrom(s => s.ProductType.Name))
             .ForMember(d => d.PictureUrl,
             o => o.MapFrom<ProductPictureUrlResolver>());
 
