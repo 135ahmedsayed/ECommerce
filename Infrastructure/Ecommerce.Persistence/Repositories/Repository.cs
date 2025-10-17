@@ -8,7 +8,9 @@ public class Repository<TEntity, TKey>(ApplicationDbContext dbContext)
 
     public async Task<IEnumerable<TEntity>> GetAllAsync(CancellationToken cancellationToken = default)
         => await dbContext.Set<TEntity>().ToListAsync(cancellationToken);
-    
+
+    public async Task<IEnumerable<TEntity>> GetAllAsync(ISpecification<TEntity> specification, CancellationToken cancellationToken = default)
+        => await dbContext.Set<TEntity>().ToListAsync(cancellationToken);
 
     public async Task<TEntity?> GetByIDAsync(TKey id, CancellationToken cancellationToken = default)
         => await dbContext.Set<TEntity>().FindAsync([id], cancellationToken);

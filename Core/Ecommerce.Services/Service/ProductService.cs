@@ -2,6 +2,7 @@
 using Ecommerce.Domain.Contracts;
 using Ecommerce.Domain.Entities.Products;
 using Ecommerce.ServiceAbstraction;
+using Ecommerce.Services.Specifications;
 using Ecommerce.Shared.DTOs.Products;
 
 namespace Ecommerce.Services.Service;
@@ -23,8 +24,9 @@ public class ProductService(IUnitOfWork unitOfWork , IMapper mapper) : IProductS
 
     public async Task<IEnumerable<ProductResponse>> GetProductsAsync(CancellationToken cancellationToken = default)
     {
+        var spec = new ProductWithBrandTypeSpecification();
         var products = await unitOfWork.GetRepostory<Product, int>()
-            .GetAllAsync(cancellationToken);
+            .GetAllAsync(spec,cancellationToken);
         return mapper.Map<IEnumerable<ProductResponse>>(products);
     }
 
