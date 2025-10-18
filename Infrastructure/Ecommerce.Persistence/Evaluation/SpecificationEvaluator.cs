@@ -6,6 +6,12 @@ internal static class SpecificationEvaluator
              where TEntity : class
     {
         var query = inputQuery;
+
+
+        //Where
+        if (specification.Criteria != null)
+            query = query.Where(specification.Criteria);
+
         //Include
         foreach (var include in specification.Includes)
             query = query.Include(include);

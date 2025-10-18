@@ -26,6 +26,13 @@ public class Repository<TEntity, TKey>(ApplicationDbContext dbContext)
     //include 
     public async Task<IEnumerable<TEntity>> GetAllAsync(ISpecification<TEntity> specification, CancellationToken cancellationToken = default)
     {
-        return await dbContext.Set<TEntity>().ApplySpecification(specification).ToListAsync(cancellationToken);
+        return await dbContext.Set<TEntity>().ApplySpecification(specification)
+            .ToListAsync(cancellationToken);
+    }
+    //where
+    public async Task<TEntity?> GetAsync(ISpecification<TEntity> specification, CancellationToken cancellationToken = default)
+    {
+        return await dbContext.Set<TEntity>().ApplySpecification(specification)
+            .FirstOrDefaultAsync(cancellationToken);
     }
 }

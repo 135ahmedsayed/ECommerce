@@ -10,6 +10,9 @@ public interface IRepostory<TEntity , TKey>
 
     Task<TEntity?> GetByIDAsync(TKey id, CancellationToken cancellationToken = default);
     Task<IEnumerable<TEntity>> GetAllAsync(CancellationToken cancellationToken = default);
+
+    //Specification pattern
     Task<IEnumerable<TEntity>> GetAllAsync(ISpecification<TEntity> specification,CancellationToken cancellationToken = default);
+    Task<TEntity?> GetAsync(ISpecification<TEntity> specification, CancellationToken cancellationToken = default);
 
 }

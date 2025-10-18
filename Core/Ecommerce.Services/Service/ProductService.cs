@@ -18,7 +18,7 @@ public class ProductService(IUnitOfWork unitOfWork , IMapper mapper) : IProductS
     public async Task<ProductResponse?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
     {
         var products = await unitOfWork.GetRepostory<Product, int>()
-            .GetByIDAsync(id,cancellationToken);
+            .GetAsync(new ProductWithBrandTypeSpecification(id),cancellationToken);
         return mapper.Map<ProductResponse>(products);
     }
 
