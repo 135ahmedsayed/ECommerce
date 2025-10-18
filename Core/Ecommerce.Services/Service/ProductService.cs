@@ -22,9 +22,9 @@ public class ProductService(IUnitOfWork unitOfWork , IMapper mapper) : IProductS
         return mapper.Map<ProductResponse>(products);
     }
 
-    public async Task<IEnumerable<ProductResponse>> GetProductsAsync(CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<ProductResponse>> GetProductsAsync(ProductQueryParameter parameters, CancellationToken cancellationToken = default)
     {
-        var spec = new ProductWithBrandTypeSpecification();
+        var spec = new ProductWithBrandTypeSpecification(parameters);
         var products = await unitOfWork.GetRepostory<Product, int>()
             .GetAllAsync(spec,cancellationToken);
         return mapper.Map<IEnumerable<ProductResponse>>(products);

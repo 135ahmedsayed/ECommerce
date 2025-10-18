@@ -1,15 +1,22 @@
-﻿using Ecommerce.Domain.Entities.Products;
+﻿using System.Linq.Expressions;
+using Ecommerce.Domain.Entities.Products;
+using Ecommerce.Shared.DTOs.Products;
 
 namespace Ecommerce.Services.Specifications;
 
 internal class ProductWithBrandTypeSpecification : BaseSpecification<Product>
 {
-    
-    public ProductWithBrandTypeSpecification()
-        : base(null!)
+
+    public ProductWithBrandTypeSpecification(ProductQueryParameter parameters)
+        : base(CreateCriteira(parameters))
     {
         AddInclude(p => p.ProductType);
         AddInclude(p => p.ProductBrand);
+    }
+    private static Expression<Func<Product,bool>> CreateCriteira(ProductQueryParameter parameters)
+    {
+        return p => (!parameters.BrandId.HasValue || p.BrandId == parameters.BrandId.Value)
+                    &&(!parameters.TypeId.HasValue || p.TypeId == parameters.TypeId.Value);
     }
 
     // Criteria to filter by id
