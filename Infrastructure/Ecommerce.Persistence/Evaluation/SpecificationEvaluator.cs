@@ -11,11 +11,18 @@ internal static class SpecificationEvaluator
         //Where
         if (specification.Criteria != null)
             query = query.Where(specification.Criteria);
-
+        //___________________________________
         //Include
         foreach (var include in specification.Includes)
             query = query.Include(include);
-        
+        //___________________________________
+        //Order(Sorting)
+        if (specification.OrderBy != null)
+            query = query.OrderBy(specification.OrderBy);
+        else if (specification.OrderByDesc != null)
+            query = query.OrderByDescending(specification.OrderByDesc);
+        //___________________________________
+
         return query;
     }
 }

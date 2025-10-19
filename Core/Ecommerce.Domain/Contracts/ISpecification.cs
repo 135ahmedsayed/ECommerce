@@ -9,4 +9,10 @@ public interface ISpecification<TEntiy>
     //Include 
     ICollection<Expression<Func<TEntiy, object>>> Includes { get; }
 
+    //Sorting
+    Expression<Func<TEntiy, object>> OrderBy { get; }
+    Expression<Func<TEntiy, object>> OrderByDesc { get; }
+
+
+
 }

@@ -22,4 +22,15 @@ internal abstract class BaseSpecification<TEntity> : ISpecification<TEntity>
     {
         Includes.Add(expression);
     }
+
+    // Sorting Implement
+    public Expression<Func<TEntity, object>> OrderBy { get; private set; }
+
+    public Expression<Func<TEntity, object>> OrderByDesc { get; private set; }
+
+    protected void AddOrderBy(Expression<Func<TEntity, object>> expression)
+        => OrderBy = expression;
+    protected void AddOrderByDesc(Expression<Func<TEntity, object>> expression)
+        => OrderByDesc = expression;
+
 }
