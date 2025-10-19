@@ -13,6 +13,9 @@ public interface ISpecification<TEntiy>
     Expression<Func<TEntiy, object>> OrderBy { get; }
     Expression<Func<TEntiy, object>> OrderByDesc { get; }
 
-
+    //Pagination (Optional)
+    int Skip { get; }
+    int Take { get; }
+    bool IsPaginated { get; }
 
 }

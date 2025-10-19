@@ -35,4 +35,10 @@ public class Repository<TEntity, TKey>(ApplicationDbContext dbContext)
         return await dbContext.Set<TEntity>().ApplySpecification(specification)
             .FirstOrDefaultAsync(cancellationToken);
     }
+    //count(Pagination)
+    public async Task<int> CountAsync(ISpecification<TEntity> specification, CancellationToken cancellationToken = default)
+    {
+        return await dbContext.Set<TEntity>().ApplySpecification(specification)
+            .CountAsync(cancellationToken);
+    }
 }

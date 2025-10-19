@@ -28,9 +28,24 @@ internal abstract class BaseSpecification<TEntity> : ISpecification<TEntity>
 
     public Expression<Func<TEntity, object>> OrderByDesc { get; private set; }
 
+
     protected void AddOrderBy(Expression<Func<TEntity, object>> expression)
         => OrderBy = expression;
     protected void AddOrderByDesc(Expression<Func<TEntity, object>> expression)
         => OrderByDesc = expression;
+
+    // Pagination (Optional) Implement
+    public int Skip { get; private set; }
+
+    public int Take {get; private set; }
+
+    public bool IsPaginated {get; private set; }
+
+    protected void ApplyPagination(int pageSize, int pageIndex)
+    {
+        Skip = (pageIndex - 1) * pageSize;
+        Take = pageSize;
+        IsPaginated = true;
+    }
 
 }
