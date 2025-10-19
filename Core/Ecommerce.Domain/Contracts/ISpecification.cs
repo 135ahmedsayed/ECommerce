@@ -1,0 +1,21 @@
+﻿using System.Linq.Expressions;
+
+namespace Ecommerce.Domain.Contracts;
+public interface ISpecification<TEntiy>
+    where TEntiy : class
+{
+    //Criteria
+    Expression<Func<TEntiy, bool>> Criteria { get; }
+    //Include 
+    ICollection<Expression<Func<TEntiy, object>>> Includes { get; }
+
+    //Sorting
+    Expression<Func<TEntiy, object>> OrderBy { get; }
+    Expression<Func<TEntiy, object>> OrderByDesc { get; }
+
+    //Pagination (Optional)
+    int Skip { get; }
+    int Take { get; }
+    bool IsPaginated { get; }
+
+}

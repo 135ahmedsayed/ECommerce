@@ -1,4 +1,5 @@
 ﻿using Ecommerce.ServiceAbstraction;
+using Ecommerce.Shared.DTOs;
 using Ecommerce.Shared.DTOs.Products;
 using Microsoft.AspNetCore.Mvc;
 namespace Ecommerce.Presentation.api.Controllers;
@@ -7,9 +8,9 @@ public class ProductsController(IProductService service)
 {
     //Get All Products (with pagination , Search , order ,Filtration)
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<ProductResponse>>> GetProducts(CancellationToken cancellationToken = default)
+    public async Task<ActionResult<PaginatedResult<ProductResponse>>> GetProducts([FromQuery] ProductQueryParameter parameters,CancellationToken cancellationToken = default)
     {
-        var products = await service.GetProductsAsync(cancellationToken);
+        var products = await service.GetProductsAsync(parameters,cancellationToken);
         return Ok(products);
     }
     //Get By Id
