@@ -1,4 +1,5 @@
-﻿using Ecommerce.Persistence.Context;
+﻿using Ecommerce.Persistence.BasketRepo;
+using Ecommerce.Persistence.Context;
 using Ecommerce.Persistence.DbInitializers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,6 +11,8 @@ public static class PersistenceServiceExtensions
     public static IServiceCollection AddPersistenceServices(this IServiceCollection Services,
         IConfiguration configuration)
     {
+        //basket
+        Services.AddScoped<IBasketRepository, BasketRepository>();
         //RedisConnection
         Services.AddSingleton<IConnectionMultiplexer>(cfg =>
         {
