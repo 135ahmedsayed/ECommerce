@@ -3,5 +3,5 @@
 public class CustomerBasketDTO
 {
     public string Id { get; set; }
-    public ICollection<BasketItemDTO> Items { get; set; }
+    public ICollection<BasketItemDTO> Items { get; set; } = [];
 }
