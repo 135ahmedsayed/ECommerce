@@ -11,7 +11,11 @@ public class ServiceCash(IConnectionMultiplexer multiplexer)
 
     public async Task SetAsync(string key, object value, TimeSpan TTL)
     {
-        var json = JsonSerializer.Serialize(value);
+        var option = new JsonSerializerOptions
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+        };
+        var json = JsonSerializer.Serialize(value, option);
         await _database.StringSetAsync(key, json, TTL);
     }
 }

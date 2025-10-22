@@ -12,6 +12,7 @@ public static class PersistenceServiceExtensions
         IConfiguration configuration)
     {
         //basket
+        Services.AddScoped<ICashService, ServiceCash>();
         Services.AddScoped<IBasketRepository, BasketRepository>();
         //RedisConnection
         Services.AddSingleton<IConnectionMultiplexer>(cfg =>
