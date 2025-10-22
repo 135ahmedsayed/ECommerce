@@ -7,4 +7,6 @@ global using System.Text.Json;
 global using Ecommerce.Domain.Contracts;
 global using Ecommerce.Persistence.Repositories;
 global using Ecommerce.Persistence.UnitOfWorks;
+global using Ecommerce.ServiceAbstraction;
+global using StackExchange.Redis;
 
