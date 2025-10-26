@@ -5,6 +5,8 @@ using Ecommerce.Services.DependencyInjection;
 using Ecommerce.Services.Service.Exceptions;
 using ECommerce.Web.Handler;
 using ECommerce.Web.Middlewares;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerce.Web
 {
@@ -26,6 +28,26 @@ namespace ECommerce.Web
             builder.Services.AddExceptionHandler<ExceptionHendler>();
             builder.Services.AddProblemDetails();
             //_______________________
+            //Validation
+            builder.Services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.InvalidModelStateResponseFactory = actionContext =>
+                {
+                    var errors = actionContext.ModelState.Where(x => x.Value.Errors.Count > 0)
+                    .ToDictionary(x => x.Key,
+                                  y=> y.Value.Errors.Select(e => e.ErrorMessage).ToList());
+
+                    var problem = new ProblemDetails
+                    {
+                        Title = "Validation Errors",
+                        Status = StatusCodes.Status400BadRequest,
+                        Detail = "One or more validation errors occurred.",
+                        Instance = actionContext.HttpContext.Request.Path,
+                        Extensions = { { "errors", errors } }
+                    };
+                    return new BadRequestObjectResult(problem);
+                };
+            });
             var app = builder.Build();
 
             // initialize database
