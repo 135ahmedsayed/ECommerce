@@ -6,3 +6,11 @@ Accept: application/json
 ###
 GET {{BaseUrl}}/Products/Brands
 Accept: application/json
+
+###
+GET {{ECommerce.Web_HostAddress}}/api/Products/22
+Accept: application/json
+
+###
+GET {{ECommerce.Web_HostAddress}}/api/Products/22/2
+Accept: application/json

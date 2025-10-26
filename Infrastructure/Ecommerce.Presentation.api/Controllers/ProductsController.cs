@@ -19,6 +19,7 @@ public class ProductsController(IProductService service)
     [HttpGet("{Id}")]
     public async Task<ActionResult<ProductResponse>> GetById(int Id ,CancellationToken cancellationToken = default)
     {
+        //throw new NotImplementedException(); // get middleware to work
         var products = await service.GetByIdAsync(Id ,cancellationToken);
         return Ok(products);
     }
