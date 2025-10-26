@@ -10,6 +10,18 @@ public class GlobalExceptionHandler(RequestDelegate next)
         try
         {
             await next(context);
+            //not found Endpoint
+            if (context.Response.StatusCode == StatusCodes.Status404NotFound)
+            {
+                var problem = new ProblemDetails
+                {
+                    Title = "Endpoint Not Found",
+                    Status = StatusCodes.Status404NotFound,
+                    Detail = $"The requested endpoint {context.Request.Path} was not found on this server.",
+                    Instance = context.Request.Path
+                };
+                await context.Response.WriteAsJsonAsync(problem);
+            }
         }
         catch (Exception ex)
         {
