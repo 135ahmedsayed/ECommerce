@@ -2,6 +2,8 @@
 using Ecommerce.Domain.Contracts;
 using Ecommerce.Persistence.DependancyInjection;
 using Ecommerce.Services.DependencyInjection;
+using Ecommerce.Services.Service.Exceptions;
+using ECommerce.Web.Handler;
 using ECommerce.Web.Middlewares;
 
 namespace ECommerce.Web
@@ -20,7 +22,10 @@ namespace ECommerce.Web
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-
+            //ExceptionHendler
+            builder.Services.AddExceptionHandler<ExceptionHendler>();
+            builder.Services.AddProblemDetails();
+            //_______________________
             var app = builder.Build();
 
             // initialize database
@@ -53,7 +58,10 @@ namespace ECommerce.Web
             //app.UseMiddleware<GlobalExceptionHandler>();
 
             //3 way by extension method CustomExceptionHandler
-            app.UseCustomExceptionHandler();
+            //app.UseCustomExceptionHandler();
+
+            //4 way by built in middleware
+            app.UseExceptionHandler();
 
 
             //___________________
