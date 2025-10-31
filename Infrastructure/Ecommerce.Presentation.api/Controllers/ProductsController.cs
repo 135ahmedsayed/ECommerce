@@ -21,7 +21,7 @@ public class ProductsController(IProductService service)
     {
         //throw new NotImplementedException(); // get middleware to work
         var products = await service.GetByIdAsync(Id ,cancellationToken);
-        return Ok(products);
+        return HandleResult(products);
     }
     //GetBrands
     [HttpGet("Brands")]

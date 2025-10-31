@@ -2,6 +2,7 @@
 using Ecommerce.Domain.Contracts;
 using Ecommerce.Domain.Entities.Products;
 using Ecommerce.ServiceAbstraction;
+using Ecommerce.ServiceAbstraction.Common;
 using Ecommerce.Services.Service.Exceptions;
 using Ecommerce.Services.Specifications;
 using Ecommerce.Shared.DTOs;
@@ -17,13 +18,21 @@ public class ProductService(IUnitOfWork unitOfWork , IMapper mapper) : IProductS
         return mapper.Map<IEnumerable<BrandResponse>>(brands);
     }
 
-    public async Task<ProductResponse?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
+    public async Task<Result<ProductResponse>> GetByIdAsync(int id, CancellationToken cancellationToken = default)
     {
         var products = await unitOfWork.GetRepostory<Product, int>()
             .GetAsync(new ProductWithBrandTypeSpecification(id),cancellationToken)
             ?? throw new ProductNotFoundException(id); // Call Base Class Not Found Exception
-
+                                                       
+        //if(products == null)
+        //    return Result<ProductResponse>.Fail(Error.NotFound());
+        //return Result<ProductResponse>.Ok(mapper.Map<ProductResponse>(products));
+        // OR implicit
+        if (products == null)
+            return Error.NotFound();
         return mapper.Map<ProductResponse>(products);
+
+
     }
 
     public async Task<PaginatedResult<ProductResponse>> GetProductsAsync(ProductQueryParameter parameters, CancellationToken cancellationToken = default)
