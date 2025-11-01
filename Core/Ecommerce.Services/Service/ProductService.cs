@@ -7,6 +7,7 @@ using Ecommerce.Services.Service.Exceptions;
 using Ecommerce.Services.Specifications;
 using Ecommerce.Shared.DTOs;
 using Ecommerce.Shared.DTOs.Products;
+using ECommerce.ServicesAbstractions.Common;
 
 namespace Ecommerce.Services.Service;
 public class ProductService(IUnitOfWork unitOfWork , IMapper mapper) : IProductService

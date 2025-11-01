@@ -1,9 +1,13 @@
 ﻿namespace Ecommerce.ServiceAbstraction.Common;
 public enum ErrorType
 {
-    failure = 0,
-    validation = 1,
-    notFound = 2,
-    conflict = 3,
-    unauthorized = 4
+    Failure = 0,
+
+    Validation = 1,
+
+    NotFound = 2,
+
+    Conflict = 3,
+
+    Unauthorized = 4
 }

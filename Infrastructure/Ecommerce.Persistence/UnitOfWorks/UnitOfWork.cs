@@ -1,5 +1,5 @@
 ﻿namespace Ecommerce.Persistence.UnitOfWorks;
-public class UnitOfWork(ApplicationDbContext dbContext) : IUnitOfWork
+public class UnitOfWork(StoreDbContext dbContext) : IUnitOfWork
 {
     private readonly Dictionary<string, object> _repositories = [];
     public IRepostory<TEntity, Tkey> GetRepostory<TEntity, Tkey>() where TEntity : Entity<Tkey>

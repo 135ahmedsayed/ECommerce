@@ -1,7 +1,7 @@
 ﻿using Ecommerce.Persistence.Evaluation;
 
 namespace Ecommerce.Persistence.Repositories;
-public class Repository<TEntity, TKey>(ApplicationDbContext dbContext)
+public class Repository<TEntity, TKey>(StoreDbContext dbContext)
     : IRepostory<TEntity, TKey>
     where TEntity : Entity<TKey>
 {

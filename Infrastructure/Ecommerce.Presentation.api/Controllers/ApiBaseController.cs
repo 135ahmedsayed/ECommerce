@@ -1,4 +1,5 @@
 ﻿using Ecommerce.ServiceAbstraction.Common;
+using ECommerce.ServicesAbstractions.Common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -25,7 +26,7 @@ public class ApiBaseController : ControllerBase
     {
         if (errors.Count == 0)
             return Problem(statusCode: 500, title: "An unexpected error occurred");
-        if(errors.All(e => e.Type == ErrorType.validation))
+        if(errors.All(e => e.Type == ErrorType.Validation))
             return handleValidationErrors(errors);
         return HandleSingleErrorProblem(errors[0]);
     }
@@ -42,10 +43,10 @@ public class ApiBaseController : ControllerBase
     {
         var statusCode = error.Type switch
         {
-            ErrorType.validation => StatusCodes.Status400BadRequest,
-            ErrorType.notFound => StatusCodes.Status404NotFound,
-            ErrorType.conflict => StatusCodes.Status409Conflict,
-            ErrorType.unauthorized => StatusCodes.Status401Unauthorized,
+            ErrorType.Validation => StatusCodes.Status400BadRequest,
+            ErrorType.NotFound => StatusCodes.Status404NotFound,
+            ErrorType.Conflict => StatusCodes.Status409Conflict,
+            ErrorType.Unauthorized => StatusCodes.Status401Unauthorized,
             _ => StatusCodes.Status500InternalServerError
         };
         return Problem(statusCode: statusCode, title: error.Description , type : error.Code);

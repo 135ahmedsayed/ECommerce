@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualBasic;
 
 namespace Ecommerce.Persistence.DbInitializers;
-internal class DbInitializer(ApplicationDbContext dbContext)
+internal class DbInitializer(StoreDbContext dbContext)
     : IDbInitializer
 {
     public async Task InitializeAsync()

@@ -1,4 +1,5 @@
-﻿using Ecommerce.Persistence.BasketRepo;
+﻿using Ecommerce.Persistence.AuthContext;
+using Ecommerce.Persistence.BasketRepo;
 using Ecommerce.Persistence.Context;
 using Ecommerce.Persistence.DbInitializers;
 using Microsoft.Extensions.Configuration;
@@ -11,6 +12,11 @@ public static class PersistenceServiceExtensions
     public static IServiceCollection AddPersistenceServices(this IServiceCollection Services,
         IConfiguration configuration)
     {
+        //AuthContext
+        Services.AddDbContext<AuthDbContext>(option =>
+        {
+            option.UseSqlServer(configuration.GetConnectionString("AuthConnection")!);
+        });
         //basket
         Services.AddScoped<ICashService, ServiceCash>();
         Services.AddScoped<IBasketRepository, BasketRepository>();
@@ -21,7 +27,7 @@ public static class PersistenceServiceExtensions
         });
 
         //____________________________________________________________
-        Services.AddDbContext<ApplicationDbContext>(options =>
+        Services.AddDbContext<StoreDbContext>(options =>
         {
             var connectionString = configuration.GetConnectionString("SQLConnection");
             options.UseSqlServer(connectionString);
