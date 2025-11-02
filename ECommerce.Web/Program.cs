@@ -21,7 +21,10 @@ namespace ECommerce.Web
 
             builder.Services.AddApplicationServices()
                 .AddPersistenceServices(builder.Configuration)
-                .AddInfrastructureServices();
+                .AddInfrastructureServices(builder.Configuration);
+
+            builder.Services.Configure<JWTOptions>(builder.Configuration.GetSection(JWTOptions.SectionName));
+
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
