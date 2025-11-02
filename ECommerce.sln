@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35521.163 d17.12
+VisualStudioVersion = 17.12.35521.163
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce.Web", "ECommerce.Web\ECommerce.Web.csproj", "{39A03957-505F-4D40-9511-57D220A4C846}"
 EndProject
@@ -20,6 +20,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ecommerce.Persistence", "Infrastructure\Ecommerce.Persistence\Ecommerce.Persistence.csproj", "{7102E1D5-6088-40F4-951B-57955AC5E591}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ecommerce.Shared", "Ecommerce.Shared\Ecommerce.Shared.csproj", "{12652FB8-92A4-4E2C-AC6F-590915BCD79F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce.Infrastructure.Service", "Infrastructure\ECommerce.Infrastructure.Service\ECommerce.Infrastructure.Service.csproj", "{340043A5-6076-414F-BFE9-5A4BB2282D5F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,6 +57,10 @@ Global
 		{12652FB8-92A4-4E2C-AC6F-590915BCD79F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{12652FB8-92A4-4E2C-AC6F-590915BCD79F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{12652FB8-92A4-4E2C-AC6F-590915BCD79F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{340043A5-6076-414F-BFE9-5A4BB2282D5F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{340043A5-6076-414F-BFE9-5A4BB2282D5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{340043A5-6076-414F-BFE9-5A4BB2282D5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{340043A5-6076-414F-BFE9-5A4BB2282D5F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -65,5 +71,6 @@ Global
 		{1BE46C4C-9C5D-46E7-BD0E-3F126033656B} = {EC8FD300-4CAF-4521-8B23-EB6BD8813E5B}
 		{4B977BB6-A1FD-4F17-A09C-7655CC9071A1} = {6AB4FF80-A1BB-4C11-BC50-6AAC2A7C5233}
 		{7102E1D5-6088-40F4-951B-57955AC5E591} = {6AB4FF80-A1BB-4C11-BC50-6AAC2A7C5233}
+		{340043A5-6076-414F-BFE9-5A4BB2282D5F} = {6AB4FF80-A1BB-4C11-BC50-6AAC2A7C5233}
 	EndGlobalSection
 EndGlobal

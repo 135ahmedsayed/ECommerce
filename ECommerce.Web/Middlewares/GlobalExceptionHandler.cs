@@ -24,7 +24,7 @@ public class GlobalExceptionHandler(RequestDelegate next)
             {
                 Title = "An error occurred while processing your request.",
                 Detail = ex.Message,
-                Instance = context.Request.Host.ToString(),
+                Instance = context.Request.Path,
                 Status = ex switch
                 {
 
