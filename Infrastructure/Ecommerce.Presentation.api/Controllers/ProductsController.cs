@@ -2,6 +2,7 @@
 using Ecommerce.ServiceAbstraction;
 using Ecommerce.Shared.DTOs;
 using Ecommerce.Shared.DTOs.Products;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 namespace Ecommerce.Presentation.api.Controllers;
 public class ProductsController(IProductService service)
@@ -16,6 +17,7 @@ public class ProductsController(IProductService service)
         return Ok(products);
     }
     //Get By Id
+    [Authorize]
     [HttpGet("{Id}")]
     public async Task<ActionResult<ProductResponse>> GetById(int Id ,CancellationToken cancellationToken = default)
     {

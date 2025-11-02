@@ -1,4 +1,5 @@
 
+using System.Text;
 using Ecommerce.Domain.Contracts;
 using Ecommerce.Persistence.DependancyInjection;
 using Ecommerce.Services.DependencyInjection;
@@ -6,8 +7,10 @@ using Ecommerce.Services.Service.Exceptions;
 using ECommerce.Infrastructure.Service;
 using ECommerce.Web.Handler;
 using ECommerce.Web.Middlewares;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 
 namespace ECommerce.Web
 {
@@ -55,6 +58,27 @@ namespace ECommerce.Web
                 };
             });
             //__________________________
+
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+                .AddJwtBearer(options => 
+                {
+                    var jwt = builder.Configuration.GetSection(JWTOptions.SectionName)
+                    .Get<JWTOptions>();
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = jwt.Issure,
+                        ValidAudience = jwt.Audience,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwt.Key)),
+                    };
+                } );
             var app = builder.Build();
 
             // initialize database
@@ -105,6 +129,7 @@ namespace ECommerce.Web
 
             app.UseHttpsRedirection();
 
+            app.UseAuthentication(); 
             app.UseAuthorization();
 
 
