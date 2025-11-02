@@ -3,6 +3,7 @@ using Ecommerce.Domain.Contracts;
 using Ecommerce.Persistence.DependancyInjection;
 using Ecommerce.Services.DependencyInjection;
 using Ecommerce.Services.Service.Exceptions;
+using ECommerce.Infrastructure.Service;
 using ECommerce.Web.Handler;
 using ECommerce.Web.Middlewares;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -18,8 +19,10 @@ namespace ECommerce.Web
 
             // Add services to the container.
 
-            builder.Services.AddPersistenceServices(builder.Configuration);
-            builder.Services.AddApplicationServices();
+            builder.Services.AddApplicationServices()
+                .AddPersistenceServices(builder.Configuration)
+                .AddInfrastructureServices();
+
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();

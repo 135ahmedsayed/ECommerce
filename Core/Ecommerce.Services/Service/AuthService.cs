@@ -1,13 +1,15 @@
-﻿using Ecommerce.Domain.Entities.Auth;
+﻿using System.Data;
+using Ecommerce.Domain.Entities.Auth;
 using Ecommerce.ServiceAbstraction;
 using Ecommerce.ServiceAbstraction.Common;
 using Ecommerce.Shared.DTOs.Auth;
+using ECommerce.Infrastructure.Service.Contracts;
 using ECommerce.ServicesAbstractions.Common;
 using Microsoft.AspNetCore.Identity;
 
 namespace Ecommerce.Services.Service;
 
-public class AuthService(UserManager<ApplicationUser> userManager)
+public class AuthService(UserManager<ApplicationUser> userManager , ITokenService tokenService)
     : IAuthService
 {
     public async Task<Result<UserResponse>> LoginAsync(LoginRequest request)
@@ -19,7 +21,9 @@ public class AuthService(UserManager<ApplicationUser> userManager)
         if (!result)
             return Error.Unauthorized(description: "Invalid Email or Password");
 
-        return new UserResponse(user.Email, user.DisplayName, "Token");
+        var roles = await userManager.GetRolesAsync(user);
+        var token = tokenService.GetToken(user, roles);
+        return new UserResponse(user.Email, user.DisplayName, token);
     }
 
     public async Task<Result<UserResponse>> RegisterAsync(RegisterRequest request)
@@ -32,9 +36,11 @@ public class AuthService(UserManager<ApplicationUser> userManager)
             PhoneNumber = request.PhoneNumber
         };
         var result = await userManager.CreateAsync(user, request.Password);
-        if(result.Succeeded)
-            return new UserResponse(user.Email, user.DisplayName, "Token");
-        return result.Errors.Select(e => Error.Validation(e.Code ,e.Description))
-            .ToList();
+        if(!result.Succeeded)
+            return result.Errors.Select(e => Error.Validation(e.Code ,e.Description))
+                .ToList();
+        var token = tokenService.GetToken(user, []);
+
+        return new UserResponse(user.Email, user.DisplayName, token);
     }
 }
