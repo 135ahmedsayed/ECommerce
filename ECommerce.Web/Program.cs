@@ -55,7 +55,7 @@ namespace ECommerce.Web
             var scope = app.Services.CreateScope();
             var initializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
             await initializer.InitializeAsync();  //Database Creation (Data Seeding)
-
+            await initializer.InitializeAuthDbAsync(); //AuthDatabase Creation (Data Seeding)
             //Middleware
             //1 way
             /*app.Use(async (context, next) =>

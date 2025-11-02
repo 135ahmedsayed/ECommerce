@@ -1,7 +1,9 @@
-﻿using Ecommerce.Persistence.AuthContext;
+﻿using Ecommerce.Domain.Entities.Auth;
+using Ecommerce.Persistence.AuthContext;
 using Ecommerce.Persistence.BasketRepo;
 using Ecommerce.Persistence.Context;
 using Ecommerce.Persistence.DbInitializers;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using StackExchange.Redis;
@@ -35,6 +37,23 @@ public static class PersistenceServiceExtensions
         // Configure Repositories and UnitOfWork Pattern
         Services.AddScoped<IUnitOfWork,UnitOfWork>();
         Services.AddScoped<IDbInitializer, DbInitializer>();
+
+        //Identity Configuration
+        ConfigrationIdentity(Services, configuration);
         return Services;
+    }
+
+
+    private static void ConfigrationIdentity(IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddIdentityCore<ApplicationUser>(options =>
+        {
+            options.Password.RequireDigit = false;
+            options.Password.RequireLowercase = false;
+            options.Password.RequireUppercase = false;
+            options.Password.RequireNonAlphanumeric = false;
+        })
+            .AddRoles<IdentityRole>()
+            .AddEntityFrameworkStores<AuthDbContext>();
     }
 }
