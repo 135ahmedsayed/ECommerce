@@ -1,4 +1,5 @@
 ﻿using Ecommerce.Domain.Entities.Auth;
+using Ecommerce.Domain.Entities.OrderEntities;
 using Ecommerce.Persistence.AuthContext;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
@@ -67,6 +68,23 @@ internal class DbInitializer(StoreDbContext dbContext ,
                 if (products is not null && products.Any())
                 {
                     await dbContext.Products.AddRangeAsync(products);
+                }
+                await dbContext.SaveChangesAsync();
+            }
+            if (!dbContext.DeliveryMethods.Any())
+            {
+                //Read from json
+                var ProductDate = await File.ReadAllTextAsync(@"..\Infrastructure\Ecommerce.Persistence\Context\DataSeed\delivery.json");
+                //Deserialize Convert From json to C#
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+                var delivery = JsonSerializer.Deserialize<List<DeliveryMethod>>(ProductDate, options);
+                //Save to db 
+                if (delivery is not null && delivery.Any())
+                {
+                    await dbContext.DeliveryMethods.AddRangeAsync(delivery);
                 }
                 await dbContext.SaveChangesAsync();
             }
