@@ -69,4 +69,27 @@ public class OrderService(IUnitOfWork unitOfWork,
         
         return mapper.Map<OrderResponse>(order);
     }
+
+    public async Task<Result<OrderResponse>> GetByIdAsync(Guid Id)
+    {
+        var order = await unitOfWork.GetRepostory<Order, Guid>()
+            .GetAllAsync(new OrderByIdSpecification(Id));
+        if (order == null)
+            return Error.NotFound("Order Not Found", $"Order with Id {Id} was not found");
+        return mapper.Map<OrderResponse>(order);
+    }
+
+    public async Task<IEnumerable<OrderResponse>> GetByUserEmailAsync(string email)
+    {
+        var orders = await unitOfWork.GetRepostory<Order, Guid>()
+            .GetAllAsync(new OrderByEmailSpecification(email));
+        return mapper.Map<IEnumerable<OrderResponse>>(orders);
+    }
+
+    public async Task<IEnumerable<DeliveryMethodResponse>> GetDeliveryMethodsync()
+    {
+        var methods = await unitOfWork.GetRepostory<DeliveryMethod, int>()
+            .GetAllAsync();
+        return mapper.Map<IEnumerable<DeliveryMethodResponse>>(methods);
+    }
 }
