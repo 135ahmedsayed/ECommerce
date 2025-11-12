@@ -14,19 +14,19 @@ public class OrderService(IUnitOfWork unitOfWork,
     IBasketRepository basketRepository)
     : IOrderService
 {
-    public async Task<Result<OrderResponse>> CreateAsync(OrderRequest request, string email)
+    public async Task<Result<OrderResponse>> CreateAsync(OrderRequest request, string email , CancellationToken cancellationToken)
     {
         var basket = await basketRepository.GetAsync(request.basketId);
         if (basket == null)
             return Error.NotFound("Basket Not Found", $"Basket with Id {request.basketId} was not found");
         var method = await unitOfWork.GetRepostory<DeliveryMethod, int>()
-            .GetByIDAsync(request.DeliveryMethodId);
+            .GetByIDAsync(request.DeliveryMethodId , cancellationToken);
         if (method == null)
             return Error.NotFound("Delivery Method Not Found", $"Delivery Method with Id {request.DeliveryMethodId} was not found");
 
         var productRepo = unitOfWork.GetRepostory<Product, int>();
         var ids = basket.Items.Select(i => i.Id).ToList();
-        var products = (await productRepo.GetAllAsync(new GetProductByIdsSpecifications(ids))).ToDictionary(p => p.Id);
+        var products = (await productRepo.GetAllAsync(new GetProductByIdsSpecifications(ids) ,cancellationToken)).ToDictionary(p => p.Id);
 
         var orderItems = new List<OrderItem>();
         var validationErrors = new List<Error>();
@@ -65,31 +65,31 @@ public class OrderService(IUnitOfWork unitOfWork,
             Address = address,
         };
         unitOfWork.GetRepostory<Order, Guid>().Add(order);
-        await unitOfWork.SaveChangesAsync();
+        await unitOfWork.SaveChangesAsync(cancellationToken);
         
         return mapper.Map<OrderResponse>(order);
     }
 
-    public async Task<Result<OrderResponse>> GetByIdAsync(Guid Id)
+    public async Task<Result<OrderResponse>> GetOrderAsync(Guid Id, string email, CancellationToken cancellationToken)
     {
         var order = await unitOfWork.GetRepostory<Order, Guid>()
-            .GetAllAsync(new OrderByIdSpecification(Id));
+            .GetAllAsync(new OrderByIdAndEmailSpecification(email,Id), cancellationToken);
         if (order == null)
             return Error.NotFound("Order Not Found", $"Order with Id {Id} was not found");
         return mapper.Map<OrderResponse>(order);
     }
 
-    public async Task<IEnumerable<OrderResponse>> GetByUserEmailAsync(string email)
+    public async Task<IEnumerable<OrderResponse>> GetAllAsync(string email, CancellationToken cancellationToken)
     {
         var orders = await unitOfWork.GetRepostory<Order, Guid>()
-            .GetAllAsync(new OrderByEmailSpecification(email));
+            .GetAllAsync(new OrderByEmailSpecification(email), cancellationToken);
         return mapper.Map<IEnumerable<OrderResponse>>(orders);
     }
 
-    public async Task<IEnumerable<DeliveryMethodResponse>> GetDeliveryMethodsync()
+    public async Task<IEnumerable<DeliveryMethodResponse>> GetDeliveryMethodsync(CancellationToken cancellationToken)
     {
         var methods = await unitOfWork.GetRepostory<DeliveryMethod, int>()
-            .GetAllAsync();
+            .GetAllAsync(cancellationToken);
         return mapper.Map<IEnumerable<DeliveryMethodResponse>>(methods);
     }
 }
