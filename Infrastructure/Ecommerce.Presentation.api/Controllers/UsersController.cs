@@ -2,10 +2,14 @@
 using Ecommerce.ServiceAbstraction;
 using Ecommerce.Shared.DTOs.Auth;
 using Ecommerce.Shared.DTOs.Users;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Ecommerce.Presentation.api.Controllers;
 
+[ProducesResponseType<ProblemDetails>(StatusCodes.Status404NotFound)]
+[Authorize]
 public class UsersController(IUserService userService)
     : ApiBaseController
 {
@@ -23,6 +27,8 @@ public class UsersController(IUserService userService)
         var result = await userService.GetAddressAsync(email);
         return HandleResult(result);
     }
+
+    [ProducesResponseType<AddressDTO>(200)]
     [HttpPut("Address")]
     public async Task<ActionResult<AddressDTO>> UpdateUserAddress(AddressDTO address)
     {
