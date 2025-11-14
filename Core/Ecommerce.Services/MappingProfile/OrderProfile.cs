@@ -28,6 +28,9 @@ public class OrderProfile : Profile
             o => o.MapFrom(s => s.Product.Name))
             .ForMember(d => d.PictureUrl,
             o => o.MapFrom<OrderPictureUrlResolver>());
+
+        CreateMap<DeliveryMethod, DeliveryMethodResponse>()
+            .ForMember(d => d.Cost, o => o.MapFrom(s => s.Price));
     }
 }
 
