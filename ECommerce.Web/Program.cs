@@ -24,6 +24,22 @@ namespace ECommerce.Web
 
             // Add services to the container.
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("DevelopmentPolicy", policy =>
+                {
+                    policy.AllowAnyHeader()
+                          .AllowAnyMethod()
+                          .WithOrigins();
+                });
+                options.AddPolicy("Production", policy =>
+                {
+                    //policy.AllowAnyHeader()
+                    //      .AllowAnyMethod()
+                    //      .WithOrigins("https://yourproductionurl.com");
+                });
+            });
+
             builder.Services.AddApplicationServices()
                 .AddPersistenceServices(builder.Configuration)
                 .AddInfrastructureServices(builder.Configuration);
@@ -162,7 +178,7 @@ namespace ECommerce.Web
             app.UseStaticFiles();
 
             app.UseHttpsRedirection();
-
+            app.UseCors("DevelopmentPolicy");
             app.UseAuthentication(); 
             app.UseAuthorization();
 
